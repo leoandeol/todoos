@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <canvas id="icon" width="1024" height="1024"></canvas>
+    <script>
+        const canvas = document.getElementById('icon');
+        const ctx = canvas.getContext('2d');
+        const size = 1024;
+
+        // Material 3 ColorScheme.fromSeed(seedColor: 0xFF7C4DFF) resolved colors:
+        //   primary:  #63568F
+        //   tertiary: #7D5261
+        const radius = size * 0.22;
+        const grad = ctx.createLinearGradient(0, 0, size, size);
+        grad.addColorStop(0, '#63568F');
+        grad.addColorStop(1, '#7D5261');
+
+        // Rounded rectangle
+        ctx.beginPath();
+        ctx.moveTo(radius, 0);
+        ctx.lineTo(size - radius, 0);
+        ctx.quadraticCurveTo(size, 0, size, radius);
+        ctx.lineTo(size, size - radius);
+        ctx.quadraticCurveTo(size, size, size - radius, size);
+        ctx.lineTo(radius, size);
+        ctx.quadraticCurveTo(0, size, 0, size - radius);
+        ctx.lineTo(0, radius);
+        ctx.quadraticCurveTo(0, 0, radius, 0);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Checkmark - matching the in-app Icons.check_rounded proportions
+        const pad = size * 0.12;
+        const checkW = size - 2 * pad;
+        const checkH = size - 2 * pad;
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = checkW * 0.11;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(pad + checkW * 0.18, pad + checkH * 0.52);
+        ctx.lineTo(pad + checkW * 0.40, pad + checkH * 0.74);
+        ctx.lineTo(pad + checkW * 0.82, pad + checkH * 0.28);
+        ctx.stroke();
+
+        // Download link
+        const link = document.createElement('a');
+        link.download = 'todoos_icon.png';
+        link.href = canvas.toDataURL('image/png');
+        link.textContent = 'Download Icon';
+        link.style.cssText = 'display:block;margin:20px;font-size:24px;';
+        document.body.appendChild(link);
+    </script>
+</body>
+
+</html>
